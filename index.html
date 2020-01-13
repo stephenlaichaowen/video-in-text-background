@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>Video in Text Background</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="icon" href="images/icons/icon-512x512.png">
+  <link rel="manifest" href="manifest.json">
+  
+  <!-- Style -->
+  <link rel="stylesheet" href="style.css">
+    
+  <!-- Script -->  
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+
+<body>
+  <div id="app" class="banner">
+    <input class="textBox" type="text" v-model="text" @keyup.enter="changeText" placeholder="Please enter any text...">   
+    <video autoplay muted loop>
+      <source :src="myVideo" type="video/mp4">
+    </video>
+    <h2>{{ title }}</h2>
+  </div>
+</body>
+
+</html>
+
+<script>
+  const app = new Vue({
+    el: '#app',
+    data: {
+      text: null,
+      title: 'Video',
+      myVideo: 'video.mp4'
+    },
+    methods: {
+      changeText() {
+        this.title = this.text
+        this.text = null
+      }
+    }
+  })
+</script>
+
+<script>
+  if (navigator.serviceWorker) {
+    navigator.serviceWorker
+      .register('./sw.js')
+      .then(registration => {
+        console.log(registration);
+      })
+      .catch(console.error)
+  }
+</script>
